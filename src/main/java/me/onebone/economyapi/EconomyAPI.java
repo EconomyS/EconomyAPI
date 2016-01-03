@@ -33,6 +33,7 @@ import cn.nukkit.utils.Utils;
 import cn.nukkit.command.CommandSender;
 import me.onebone.economyapi.command.GiveMoneyCommand;
 import me.onebone.economyapi.command.MyMoneyCommand;
+import me.onebone.economyapi.command.PayCommand;
 import me.onebone.economyapi.command.SeeMoneyCommand;
 import me.onebone.economyapi.command.TakeMoneyCommand;
 import me.onebone.economyapi.command.TopMoneyCommand;
@@ -281,6 +282,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		this.getServer().getCommandMap().register("seemoney", new SeeMoneyCommand(this));
 		this.getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
 		this.getServer().getCommandMap().register("takemoney", new TakeMoneyCommand(this));
+		this.getServer().getCommandMap().register("pay", new PayCommand(this));
 	}
 	
 	private boolean selectProvider(){

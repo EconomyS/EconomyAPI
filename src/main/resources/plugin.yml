@@ -17,3 +17,7 @@ permissions:
             default: true
           economyapi.command.givemoney:
             default: op
+          economyapi.command.takemoney:
+            default: op
+          economyapi.command.pay:
+            default: true
