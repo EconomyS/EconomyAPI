@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
@@ -29,8 +30,10 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Utils;
+import cn.nukkit.command.CommandSender;
 
 import me.onebone.economyapi.command.MyMoneyCommand;
+import me.onebone.economyapi.command.TopMoneyCommand;
 import me.onebone.economyapi.event.account.CreateAccountEvent;
 import me.onebone.economyapi.event.money.AddMoneyEvent;
 import me.onebone.economyapi.event.money.ReduceMoneyEvent;
@@ -74,10 +77,14 @@ public class EconomyAPI extends PluginBase implements Listener{
 		CreateAccountEvent event = new CreateAccountEvent(player, defaultMoney);
 		this.getServer().getPluginManager().callEvent(event);
 		if(!event.isCancelled() || force){
-			defaultMoney = event.getDefaultMoney() == -1D ? this.getConfig().getNested("money.default", 1000D) : event.getDefaultMoney();
+			defaultMoney = event.getDefaultMoney() == -1D ? (double)this.getConfig().getNested("money.default", 1000) : event.getDefaultMoney();
 			return this.provider.createAccount(player, defaultMoney);
 		}
 		return false;
+	}
+	
+	public LinkedHashMap<String, Double> getAllMoney(){
+		return this.provider.getAll();
 	}
 	
 	/**
@@ -221,7 +228,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		return "There are no message with key \"" + key + "\"";
 	}
 	
-	public String getMessage(String key, String[] params, Player player){
+	public String getMessage(String key, String[] params, CommandSender player){
 		return this.getMessage(key, params, player.getName());
 	}
 	
@@ -260,6 +267,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 	
 	private void registerCommands(){
 		this.getServer().getCommandMap().register("mymoney", new MyMoneyCommand(this));
+		this.getServer().getCommandMap().register("topmoney", new TopMoneyCommand(this));
 	}
 	
 	private boolean selectProvider(){

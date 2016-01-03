@@ -20,6 +20,8 @@ package me.onebone.economyapi.provider;
 
 import cn.nukkit.Player;
 
+import java.util.LinkedHashMap;
+
 public interface Provider {
 	public void open();
 	public void save();
@@ -42,6 +44,8 @@ public interface Provider {
 	
 	public double getMoney(String player);
 	public double getMoney(Player player);
+	
+	public LinkedHashMap<String, Double> getAll();
 	
 	public String getName();
 }

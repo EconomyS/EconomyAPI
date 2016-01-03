@@ -3,3 +3,14 @@ version: "1.0.0"
 author: onebone
 api: ["1.0.0"]
 main: me.onebone.economyapi.EconomyAPI
+
+
+permissions:
+  economyapi.*:
+    children:
+      economyapi.command.*:
+        children:
+          economyapi.command.mymoney:
+            default: true
+          economyapi.command.topmoney:
+            default: true

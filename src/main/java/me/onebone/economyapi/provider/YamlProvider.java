@@ -133,6 +133,10 @@ public class YamlProvider implements Provider{
 		return -1;
 	}
 	
+	public LinkedHashMap<String, Double> getAll(){
+		return data;
+	}
+	
 	public String getName(){
 		return "Yaml";
 	}
