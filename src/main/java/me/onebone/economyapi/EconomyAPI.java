@@ -44,6 +44,7 @@ import me.onebone.economyapi.event.money.SetMoneyEvent;
 import me.onebone.economyapi.json.JSONObject;
 import me.onebone.economyapi.provider.Provider;
 import me.onebone.economyapi.provider.YamlProvider;
+import me.onebone.economyapi.task.AutoSaveTask;
 
 public class EconomyAPI extends PluginBase implements Listener{
 	private static EconomyAPI instance;
@@ -247,6 +248,12 @@ public class EconomyAPI extends PluginBase implements Listener{
 		return this.getConfig().getNested("money.monetary-unit", "$");
 	}
 	
+	public void saveAll(){
+		if(this.provider instanceof Provider){
+			this.provider.close();
+		}
+	}
+	
 	public void onLoad(){
 		instance = this;
 	}
@@ -254,9 +261,12 @@ public class EconomyAPI extends PluginBase implements Listener{
 	public void onEnable(){
 		this.saveDefaultConfig();
 		
-		this.initialize();
+		boolean success = this.initialize();
 		
-		this.getServer().getPluginManager().registerEvents(this, this);
+		if(success){
+			this.getServer().getPluginManager().registerEvents(this, this);
+			this.getServer().getScheduler().scheduleDelayedRepeatingTask(new AutoSaveTask(this), this.getConfig().getNested("data.auto-save-interval", 10) * 1200, this.getConfig().getNested("data.auto-save-interval", 10) * 1200);
+		}
 	}
 	
 	@EventHandler
@@ -265,15 +275,13 @@ public class EconomyAPI extends PluginBase implements Listener{
 	}
 	
 	public void onDisable(){
-		if(this.provider instanceof Provider){
-			this.provider.close();
-		}
+		this.saveAll();
 	}
 	
-	private void initialize(){
+	private boolean initialize(){
 		this.importLanguages();
 		this.registerCommands();
-		this.selectProvider();
+		return this.selectProvider();
 	}
 	
 	private void registerCommands(){

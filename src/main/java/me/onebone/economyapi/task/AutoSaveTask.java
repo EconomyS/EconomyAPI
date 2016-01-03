@@ -1,4 +1,4 @@
-package me.onebone.economyapi.event.money;
+package me.onebone.economyapi.task;
 
 /*
  * EconomyAPI: Core of economy system for Nukkit
@@ -18,34 +18,16 @@ package me.onebone.economyapi.event.money;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import cn.nukkit.event.Cancellable;
-import cn.nukkit.event.Event;
-import cn.nukkit.event.HandlerList;
+import me.onebone.economyapi.EconomyAPI;
 
-public class SetMoneyEvent extends Event implements Cancellable{
-	public static HandlerList handlerList = new HandlerList();
-	
-	private String player;
-	private double amount;
-	
-	public SetMoneyEvent(String player, double amount){
-		this.player = player;
-		this.amount = amount;
+import cn.nukkit.scheduler.PluginTask;
+
+public class AutoSaveTask extends PluginTask<EconomyAPI>{
+	public AutoSaveTask(EconomyAPI owner){
+		super(owner);
 	}
 	
-	public String getPlayer(){
-		return this.player;
-	}
-	
-	public double getAmount(){
-		return this.amount;
-	}
-	
-	public void setAmount(double amount){
-		this.amount = amount;
-	}
-	
-	public static HandlerList getHandlers(){
-		return handlerList;
+	public void onRun(int currentTick){
+		((EconomyAPI)this.getOwner()).saveAll();
 	}
 }
