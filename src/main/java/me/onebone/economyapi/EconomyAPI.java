@@ -32,6 +32,9 @@ import cn.nukkit.utils.Utils;
 
 import me.onebone.economyapi.command.MyMoneyCommand;
 import me.onebone.economyapi.event.account.CreateAccountEvent;
+import me.onebone.economyapi.event.money.AddMoneyEvent;
+import me.onebone.economyapi.event.money.ReduceMoneyEvent;
+import me.onebone.economyapi.event.money.SetMoneyEvent;
 import me.onebone.economyapi.json.JSONObject;
 import me.onebone.economyapi.provider.Provider;
 import me.onebone.economyapi.provider.YamlProvider;
@@ -70,8 +73,8 @@ public class EconomyAPI extends PluginBase implements Listener{
 	public boolean createAccount(String player, double defaultMoney, boolean force){
 		CreateAccountEvent event = new CreateAccountEvent(player, defaultMoney);
 		this.getServer().getPluginManager().callEvent(event);
-		if(!event.isCancelled()){
-			defaultMoney = event.getDefaultMoney() == -1D ? Double.parseDouble(this.getConfig().getNested("money.default").toString()) : event.getDefaultMoney();
+		if(!event.isCancelled() || force){
+			defaultMoney = event.getDefaultMoney() == -1D ? this.getConfig().getNested("money.default", 1000D) : event.getDefaultMoney();
 			return this.provider.createAccount(player, defaultMoney);
 		}
 		return false;
@@ -91,6 +94,116 @@ public class EconomyAPI extends PluginBase implements Listener{
 		player = player.toLowerCase();
 		
 		return this.provider.getMoney(player);
+	}
+	
+	public int setMoney(Player player, double amount){
+		return this.setMoney(player.getName(), amount, false);
+	}
+	
+	public int setMoney(Player player, double amount, boolean force){
+		return this.setMoney(player.getName(), amount, false);
+	}
+	
+	public int setMoney(String player, double amount){
+		return this.setMoney(player, amount, false);
+	}
+	
+	public int setMoney(String player, double amount, boolean force){
+		if(amount < 0){
+			return RET_INVALID;
+		}
+		
+		SetMoneyEvent event = new SetMoneyEvent(player, amount);
+		this.getServer().getPluginManager().callEvent(event);
+		if(!event.isCancelled() || force){
+			if(this.provider.accountExists(player)){
+				amount = event.getAmount();
+				
+				if(amount <= this.getConfig().getNested("money.max", 9999999999D)){
+					this.provider.setMoney(player, amount);
+					return RET_SUCCESS;
+				}else{
+					return RET_INVALID;
+				}
+			}else{
+				return RET_NO_ACCOUNT;
+			}
+		}
+		return RET_CANCELLED;
+	}
+	
+	public int addMoney(Player player, double amount){
+		return this.addMoney(player.getName(), amount, false);
+	}
+	
+	public int addMoney(Player player, double amount, boolean force){
+		return this.addMoney(player.getName(), amount, false);
+	}
+	
+	public int addMoney(String player, double amount){
+		return this.addMoney(player, amount, false);
+	}
+	
+	public int addMoney(String player, double amount, boolean force){
+		if(amount < 0){
+			return RET_INVALID;
+		}
+		
+		AddMoneyEvent event = new AddMoneyEvent(player, amount);
+		this.getServer().getPluginManager().callEvent(event);
+		if(!event.isCancelled()){
+			amount = event.getAmount();
+			
+			double money;
+			if((money = this.provider.getMoney(player)) != -1){
+				if(money + amount > this.getConfig().getNested("money.max", 9999999999D)){
+					return RET_INVALID;
+				}else{
+					this.provider.addMoney(player, amount);
+					return RET_SUCCESS;
+				}
+			}else{
+				return RET_NO_ACCOUNT;
+			}
+		}
+		return RET_CANCELLED;
+	}
+	
+	public int reduceMoney(Player player, double amount){
+		return this.reduceMoney(player.getName(), amount, false);
+	}
+	
+	public int reduceMoney(Player player, double amount, boolean force){
+		return this.reduceMoney(player.getName(), amount, false);
+	}
+	
+	public int reduceMoney(String player, double amount){
+		return this.reduceMoney(player, amount, false);
+	}
+	
+	public int reduceMoney(String player, double amount, boolean force){
+		if(amount < 0){
+			return RET_INVALID;
+		}
+		
+		ReduceMoneyEvent event = new ReduceMoneyEvent(player, amount);
+		this.getServer().getPluginManager().callEvent(event);
+		if(!event.isCancelled()){
+			amount = event.getAmount();
+			
+			double money;
+			if((money = this.provider.getMoney(player)) != -1){
+				if(money - amount < 0){
+					return RET_INVALID;
+				}else{
+					this.provider.reduceMoney(player, amount);
+					return RET_SUCCESS;
+				}
+			}else{
+				return RET_NO_ACCOUNT;
+			}
+		}
+		return RET_CANCELLED;
 	}
 	
 	public String getMessage(String key, String[] params, String player){ // TODO: Individual language
