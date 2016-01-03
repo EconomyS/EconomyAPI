@@ -37,7 +37,7 @@ public class MyMoneyCommand extends Command{
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
 		if(!this.plugin.isEnabled()) return false;
-		if(!sender.hasPermission("economyapi.command.topmoney")) return false;
+		if(!sender.hasPermission("economyapi.command.mymoney")) return false;
 		
 		if(!(sender instanceof Player)){
 			sender.sendMessage(TextFormat.RED+"Please use this command in-game.");
