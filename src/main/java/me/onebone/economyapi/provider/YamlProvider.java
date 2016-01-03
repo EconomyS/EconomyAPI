@@ -97,7 +97,7 @@ public class YamlProvider implements Provider{
 		player = player.toLowerCase();
 		
 		if(data.containsKey(player)){
-			data.put(player, amount);
+			data.put(player, data.get(player) + amount);
 			return true;
 		}
 		return false;

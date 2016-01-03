@@ -4,7 +4,6 @@ author: onebone
 api: ["1.0.0"]
 main: me.onebone.economyapi.EconomyAPI
 
-
 permissions:
   economyapi.*:
     children:
@@ -14,3 +13,7 @@ permissions:
             default: true
           economyapi.command.topmoney:
             default: true
+          economyapi.command.seemoney:
+            default: true
+          economyapi.command.givemoney:
+            default: op

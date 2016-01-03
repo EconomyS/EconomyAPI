@@ -31,8 +31,10 @@ import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Utils;
 import cn.nukkit.command.CommandSender;
-
+import me.onebone.economyapi.command.GiveMoneyCommand;
 import me.onebone.economyapi.command.MyMoneyCommand;
+import me.onebone.economyapi.command.SeeMoneyCommand;
+import me.onebone.economyapi.command.TakeMoneyCommand;
 import me.onebone.economyapi.command.TopMoneyCommand;
 import me.onebone.economyapi.event.account.CreateAccountEvent;
 import me.onebone.economyapi.event.money.AddMoneyEvent;
@@ -126,7 +128,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			if(this.provider.accountExists(player)){
 				amount = event.getAmount();
 				
-				if(amount <= this.getConfig().getNested("money.max", 9999999999D)){
+				if(amount <= this.getConfig().getNested("money.max", 9999999999L)){
 					this.provider.setMoney(player, amount);
 					return RET_SUCCESS;
 				}else{
@@ -163,7 +165,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			
 			double money;
 			if((money = this.provider.getMoney(player)) != -1){
-				if(money + amount > this.getConfig().getNested("money.max", 9999999999D)){
+				if(money + amount > this.getConfig().getNested("money.max", 9999999999L)){
 					return RET_INVALID;
 				}else{
 					this.provider.addMoney(player, amount);
@@ -228,6 +230,14 @@ public class EconomyAPI extends PluginBase implements Listener{
 		return "There are no message with key \"" + key + "\"";
 	}
 	
+	public String getMessage(String key, String sender){
+		return this.getMessage(key, new String[]{}, sender);
+	}
+	
+	public String getMessage(String key, CommandSender sender){
+		return this.getMessage(key, new String[]{}, sender);
+	}
+	
 	public String getMessage(String key, String[] params, CommandSender player){
 		return this.getMessage(key, params, player.getName());
 	}
@@ -268,6 +278,9 @@ public class EconomyAPI extends PluginBase implements Listener{
 	private void registerCommands(){
 		this.getServer().getCommandMap().register("mymoney", new MyMoneyCommand(this));
 		this.getServer().getCommandMap().register("topmoney", new TopMoneyCommand(this));
+		this.getServer().getCommandMap().register("seemoney", new SeeMoneyCommand(this));
+		this.getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
+		this.getServer().getCommandMap().register("takemoney", new TakeMoneyCommand(this));
 	}
 	
 	private boolean selectProvider(){
