@@ -35,6 +35,10 @@ public class SeeMoneyCommand extends Command{
 		}
 		
 		double money = this.plugin.myMoney(player);
+		if(money < 0){
+			sender.sendMessage(this.plugin.getMessage("player-never-connected", new String[]{player}, sender));
+			return true;
+		}
 		sender.sendMessage(this.plugin.getMessage("seemoney-seemoney", new String[]{player, Double.toString(money)}, sender));
 		return true;
 	}
