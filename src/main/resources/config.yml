@@ -1,0 +1,10 @@
+money:
+  monetary-unit: "$"
+  default: 1000
+  max: 9999999999
+rank:
+  add-op-at-rank: false
+data:
+  auto-save-interval: 10
+  provider: yaml
+  
