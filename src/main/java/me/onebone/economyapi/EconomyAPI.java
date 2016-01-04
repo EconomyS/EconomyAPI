@@ -250,7 +250,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 	
 	public void saveAll(){
 		if(this.provider instanceof Provider){
-			this.provider.close();
+			this.provider.save();
 		}
 	}
 	

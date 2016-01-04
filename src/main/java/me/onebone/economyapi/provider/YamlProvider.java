@@ -44,12 +44,12 @@ public class YamlProvider implements Provider{
 		
 	}
 
-	public void save() {
+	public void save(){
 		file.set("money", data);
 		file.save();
 	}
 
-	public void close() {
+	public void close(){
 		this.save();
 		
 		file = null;
@@ -79,7 +79,7 @@ public class YamlProvider implements Provider{
 		return false;
 	}
 
-	public boolean setMoney(String player, double amount) {
+	public boolean setMoney(String player, double amount){
 		player = player.toLowerCase();
 		
 		if(data.containsKey(player)){
@@ -89,11 +89,11 @@ public class YamlProvider implements Provider{
 		return false;
 	}
 
-	public boolean setMoney(Player player, double amount) {
+	public boolean setMoney(Player player, double amount){
 		return this.setMoney(player.getName(), amount);
 	}
 
-	public boolean addMoney(String player, double amount) {
+	public boolean addMoney(String player, double amount){
 		player = player.toLowerCase();
 		
 		if(data.containsKey(player)){
@@ -103,11 +103,11 @@ public class YamlProvider implements Provider{
 		return false;
 	}
 
-	public boolean addMoney(Player player, double amount) {
+	public boolean addMoney(Player player, double amount){
 		return this.addMoney(player.getName(), amount);
 	}
 
-	public boolean reduceMoney(String player, double amount) {
+	public boolean reduceMoney(String player, double amount){
 		player = player.toLowerCase();
 		
 		if(data.containsKey(player)){
@@ -117,7 +117,7 @@ public class YamlProvider implements Provider{
 		return false;
 	}
 
-	public boolean reduceMoney(Player player, double amount) {
+	public boolean reduceMoney(Player player, double amount){
 		return this.reduceMoney(player.getName(), amount);
 	}
 	
