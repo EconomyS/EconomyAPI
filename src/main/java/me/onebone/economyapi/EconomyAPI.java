@@ -81,7 +81,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		CreateAccountEvent event = new CreateAccountEvent(player, defaultMoney);
 		this.getServer().getPluginManager().callEvent(event);
 		if(!event.isCancelled() || force){
-			defaultMoney = event.getDefaultMoney() == -1D ? (double)this.getConfig().getNested("money.default", 1000) : event.getDefaultMoney();
+			defaultMoney = event.getDefaultMoney() == -1D ? this.getConfig().getNested("money.default", 1000D) : event.getDefaultMoney();
 			return this.provider.createAccount(player, defaultMoney);
 		}
 		return false;
@@ -130,7 +130,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			if(this.provider.accountExists(player)){
 				amount = event.getAmount();
 				
-				if(amount <= this.getConfig().getNested("money.max", 9999999999L)){
+				if(amount <= this.getConfig().getNested("money.max", 9999999999D)){
 					this.provider.setMoney(player, amount);
 					return RET_SUCCESS;
 				}else{
@@ -167,7 +167,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			
 			double money;
 			if((money = this.provider.getMoney(player)) != -1){
-				if(money + amount > this.getConfig().getNested("money.max", 9999999999L)){
+				if(money + amount > this.getConfig().getNested("money.max", 9999999999D)){
 					return RET_INVALID;
 				}else{
 					this.provider.addMoney(player, amount);

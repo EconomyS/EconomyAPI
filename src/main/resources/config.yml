@@ -1,7 +1,7 @@
 money:
   monetary-unit: "$"
-  default: 1000
-  max: 9999999999
+  default: 1000.0
+  max: 9999999999.0
 rank:
   add-op-at-rank: false
 data:
