@@ -81,7 +81,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		CreateAccountEvent event = new CreateAccountEvent(player, defaultMoney);
 		this.getServer().getPluginManager().callEvent(event);
 		if(!event.isCancelled() || force){
-			defaultMoney = event.getDefaultMoney() == -1D ? this.getConfig().getNested("money.default", 1000D) : event.getDefaultMoney();
+			defaultMoney = event.getDefaultMoney() == -1D ? this.getConfig().get("money.default", 1000D) : event.getDefaultMoney();
 			return this.provider.createAccount(player, defaultMoney);
 		}
 		return false;
@@ -130,7 +130,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			if(this.provider.accountExists(player)){
 				amount = event.getAmount();
 				
-				if(amount <= this.getConfig().getNested("money.max", 9999999999D)){
+				if(amount <= this.getConfig().get("money.max", 9999999999D)){
 					this.provider.setMoney(player, amount);
 					return RET_SUCCESS;
 				}else{
@@ -167,7 +167,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			
 			double money;
 			if((money = this.provider.getMoney(player)) != -1){
-				if(money + amount > this.getConfig().getNested("money.max", 9999999999D)){
+				if(money + amount > this.getConfig().get("money.max", 9999999999D)){
 					return RET_INVALID;
 				}else{
 					this.provider.addMoney(player, amount);
@@ -245,7 +245,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 	}
 	
 	public String getMonetaryUnit(){
-		return this.getConfig().getNested("money.monetary-unit", "$");
+		return this.getConfig().get("money.monetary-unit", "$");
 	}
 	
 	public void saveAll(){
@@ -265,7 +265,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		
 		if(success){
 			this.getServer().getPluginManager().registerEvents(this, this);
-			this.getServer().getScheduler().scheduleDelayedRepeatingTask(new AutoSaveTask(this), this.getConfig().getNested("data.auto-save-interval", 10) * 1200, this.getConfig().getNested("data.auto-save-interval", 10) * 1200);
+			this.getServer().getScheduler().scheduleDelayedRepeatingTask(new AutoSaveTask(this), this.getConfig().get("data.auto-save-interval", 10) * 1200, this.getConfig().get("data.auto-save-interval", 10) * 1200);
 		}
 	}
 	
@@ -294,7 +294,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 	}
 	
 	private boolean selectProvider(){
-		switch(((String)this.getConfig().getNested("data.provider", "yaml")).toLowerCase()){
+		switch(((String)this.getConfig().get("data.provider", "yaml")).toLowerCase()){
 		case "yaml":
 			this.provider = new YamlProvider(new File(this.getDataFolder(), "Money.yml"));
 			break;
