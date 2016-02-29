@@ -5,9 +5,9 @@ api: ["1.0.0"]
 main: me.onebone.economyapi.EconomyAPI
 
 permissions:
-  economyapi.*:
+  economyapi:
     children:
-      economyapi.command.*:
+      economyapi.command:
         children:
           economyapi.command.mymoney:
             default: true
