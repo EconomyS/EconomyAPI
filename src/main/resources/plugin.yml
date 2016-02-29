@@ -21,3 +21,5 @@ permissions:
             default: op
           economyapi.command.pay:
             default: true
+          economyapi.command.setmoney:
+            default: op
