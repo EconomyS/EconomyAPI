@@ -31,12 +31,7 @@ import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Utils;
 import cn.nukkit.command.CommandSender;
-import me.onebone.economyapi.command.GiveMoneyCommand;
-import me.onebone.economyapi.command.MyMoneyCommand;
-import me.onebone.economyapi.command.PayCommand;
-import me.onebone.economyapi.command.SeeMoneyCommand;
-import me.onebone.economyapi.command.TakeMoneyCommand;
-import me.onebone.economyapi.command.TopMoneyCommand;
+import me.onebone.economyapi.command.*;
 import me.onebone.economyapi.event.account.CreateAccountEvent;
 import me.onebone.economyapi.event.money.AddMoneyEvent;
 import me.onebone.economyapi.event.money.ReduceMoneyEvent;
@@ -291,6 +286,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		this.getServer().getCommandMap().register("givemoney", new GiveMoneyCommand(this));
 		this.getServer().getCommandMap().register("takemoney", new TakeMoneyCommand(this));
 		this.getServer().getCommandMap().register("pay", new PayCommand(this));
+		this.getServer().getCommandMap().register("setmoney", new SetMoneyCommand(this));
 	}
 	
 	private boolean selectProvider(){

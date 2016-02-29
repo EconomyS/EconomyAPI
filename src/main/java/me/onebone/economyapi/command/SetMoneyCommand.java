@@ -24,11 +24,11 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 
-public class TakeMoneyCommand extends Command{
+public class SetMoneyCommand extends Command{
 	private EconomyAPI plugin;
 	
-	public TakeMoneyCommand(EconomyAPI plugin) {
-		super("takemoney", "Takes money from player", "/takemoney <player> <amount>");
+	public SetMoneyCommand(EconomyAPI plugin) {
+		super("setmoney", "Set money of player", "/setmoney <player> <amount>");
 		
 		this.plugin = plugin;
 	}
@@ -36,7 +36,7 @@ public class TakeMoneyCommand extends Command{
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
 		if(!this.plugin.isEnabled()) return false;
-		if(!sender.hasPermission("economyapi.command.takemoney")){
+		if(!sender.hasPermission("economyapi.command.setmoney")){
 			sender.sendMessage(TextFormat.RED + "You don't have permission to use this command.");
 			return false;
 		}
@@ -54,30 +54,27 @@ public class TakeMoneyCommand extends Command{
 		try{
 			double amount = Double.parseDouble(args[1]);
 			if(amount < 0){
-				sender.sendMessage(this.plugin.getMessage("takemoney-invalid-number", sender));
+				sender.sendMessage(this.plugin.getMessage("setmoney-invalid-number", sender));
 				return true;
 			}
 			
-			int result = this.plugin.reduceMoney(player, amount);
+			int result = this.plugin.setMoney(player, amount);
 			switch(result){
-			case EconomyAPI.RET_INVALID:
-				sender.sendMessage(this.plugin.getMessage("takemoney-player-lack-of-money", sender));
-				return true;
 			case EconomyAPI.RET_NO_ACCOUNT:
 				sender.sendMessage(this.plugin.getMessage("player-never-connected", new String[]{player}, sender));
 				return true;
 			case EconomyAPI.RET_CANCELLED:
-				sender.sendMessage(this.plugin.getMessage("takemoney-failed", new String[]{player}, sender));
+				sender.sendMessage(this.plugin.getMessage("setmoney-failed", new String[]{player}, sender));
 				return true;
 			case EconomyAPI.RET_SUCCESS:
-				sender.sendMessage(this.plugin.getMessage("takemoney-took-money", new String[]{player, Double.toString(amount)}, sender));
+				sender.sendMessage(this.plugin.getMessage("setmoney-setmoney", new String[]{player, Double.toString(amount)}, sender));
 				if(p instanceof Player){
-					p.sendMessage(this.plugin.getMessage("takemoney-money-taken", new String[]{Double.toString(amount)}, sender));
+					p.sendMessage(this.plugin.getMessage("setmoney-set", new String[]{Double.toString(amount)}, sender));
 				}
 				return true;
 			}
 		}catch(NumberFormatException e){
-			sender.sendMessage(this.plugin.getMessage("takemoney-must-be-number", sender));
+			sender.sendMessage(this.plugin.getMessage("setmoney-invalid-number", sender));
 		}
 		return true;
 	}
