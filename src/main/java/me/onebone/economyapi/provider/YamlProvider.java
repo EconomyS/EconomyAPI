@@ -37,7 +37,20 @@ public class YamlProvider implements Provider{
 			}
 		});
 		
-		data = (LinkedHashMap<String, Double>)file.get("money");
+		LinkedHashMap<Object, Object> temp = (LinkedHashMap<Object, Object>) file.get("money");
+		
+		data = new LinkedHashMap<>();
+		temp.forEach((key, money) -> {
+			String username = key.toString();
+			
+			if(money instanceof Integer){
+				data.put(username, ((Integer) money).doubleValue());
+			}else if(money instanceof Double){
+				data.put(username, (Double) money);
+			}else if(money instanceof String){
+				data.put(username, Double.parseDouble(money.toString()));
+			}
+		});
 	}
 	
 	public void open(){

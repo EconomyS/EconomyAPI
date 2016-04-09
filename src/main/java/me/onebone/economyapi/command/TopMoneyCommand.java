@@ -61,7 +61,7 @@ public class TopMoneyCommand extends Command{
 						public int compare(String s1, String s2) {
 							double one = money.get(s1);
 							double two = money.get(s2);
-							return one < two ? -1 : one > two ? 1 : 0;
+							return one < two ? 1 : one > two ? -1 : 0;
 						}
 					});
 					
@@ -69,10 +69,10 @@ public class TopMoneyCommand extends Command{
 					output.append(plugin.getMessage("topmoney-tag", new String[]{Integer.toString(page), Integer.toString(((players.size() + 6) / 5))}, sender) + "\n");
 
 					for(int n = 0; n < list.size(); n++){
-						int current = (n + 6) / 5;
+						int current = (int)Math.ceil((double)(n + 1) / 5);
 						if(page == current){
 							output.append(plugin.getMessage("topmoney-format", new String[]{Integer.toString(n + 1), list.get(n), Double.toString(money.get(list.get(n)))}, sender) + "\n");
-						}else if(page > current){
+						}else if(page < current){
 							break;
 						}
 					}
