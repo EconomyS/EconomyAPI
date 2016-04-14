@@ -215,7 +215,8 @@ public class EconomyAPI extends PluginBase implements Listener{
 	public String getMessage(String key, String[] params, String player){ // TODO: Individual language
 		player = player.toLowerCase();
 		
-		JSONObject obj = this.language.get("def");
+		String lang = this.getConfig().getString("lang.default-lang");
+		JSONObject obj = this.language.get(lang);
 		if(obj.has(key)){
 			String message = obj.getString(key);
 			
