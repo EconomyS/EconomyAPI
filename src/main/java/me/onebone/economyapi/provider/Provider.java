@@ -23,6 +23,8 @@ import cn.nukkit.Player;
 import java.util.LinkedHashMap;
 
 public interface Provider {
+	public void init(String path);
+	
 	public void open();
 	public void save();
 	public void close();

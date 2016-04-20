@@ -29,8 +29,8 @@ public class YamlProvider implements Provider{
 	private LinkedHashMap<String, Double> data = null;
 	
 	@SuppressWarnings({ "unchecked", "serial" })
-	public YamlProvider(File path){
-		file = new Config(path, Config.YAML, new LinkedHashMap<String, Object>(){
+	public void init(String path){
+		file = new Config(new File(path, "Money.yml"), Config.YAML, new LinkedHashMap<String, Object>(){
 			{
 				put("version" , 2);
 				put("money", new LinkedHashMap<String, Double>());
