@@ -20,9 +20,12 @@ package me.onebone.economyapi.provider;
 
 import cn.nukkit.Player;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 public interface Provider {
+	public void init(File path);
+	
 	public void open();
 	public void save();
 	public void close();
