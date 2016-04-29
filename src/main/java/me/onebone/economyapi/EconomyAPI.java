@@ -52,7 +52,6 @@ public class EconomyAPI extends PluginBase implements Listener{
 	private Provider provider;
 	private HashMap<String, JSONObject> language = null;
 	private HashMap<String, Class<?>> providerClass = new HashMap<>();
-	private String forceProviderName = null;
 	
 	private String[] langList = new String[]{
 		"ch", "cs", "def", "fr", "id", "it", "jp", "ko", "nl", "ru", "zh"	
@@ -253,7 +252,8 @@ public class EconomyAPI extends PluginBase implements Listener{
 	
 	public void onLoad(){
 		instance = this;
-		this.providerClass.put("yaml", YamlProvider.class);
+		
+		this.addProvider("yaml", YamlProvider.class);
 	}
 	
 	public void onEnable(){
@@ -294,8 +294,6 @@ public class EconomyAPI extends PluginBase implements Listener{
 	
 	private boolean selectProvider(){
 		Class<?> providerClass = this.providerClass.get(((String)this.getConfig().get("data.provider", "yaml")).toLowerCase());
-		if(this.forceProviderName != null)
-			providerClass = this.providerClass.get(this.forceProviderName);
 		
 		if(providerClass == null){
 			this.getLogger().critical("Invalid data provider was given.");
@@ -304,7 +302,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 		
 		try {
 			this.provider = (Provider) providerClass.newInstance();
-			this.provider.init(this.getDataFolder().getAbsolutePath());
+			this.provider.init(this.getDataFolder());
 		} catch (InstantiationException | IllegalAccessException e) {
 			this.getLogger().critical("Invalid data provider was given.");
 			return false;
@@ -316,9 +314,8 @@ public class EconomyAPI extends PluginBase implements Listener{
 		return true;
 	}
 	
-	public boolean addProvider(String name, Class<Provider> providerClass, boolean force){
+	public boolean addProvider(String name, Class<? extends Provider> providerClass){
 		this.providerClass.put(name, providerClass);
-		if(force) this.forceProviderName = name;
 		return true;
 	}
 	
