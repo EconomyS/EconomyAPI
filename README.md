@@ -1,4 +1,4 @@
-# EconomyAPI
+# EconomyAPI [![Build Status](https://travis-ci.org/EconomyS/EconomyAPI.svg?branch=master)](https://travis-ci.org/EconomyS/EconomyAPI)
 Core of economy system for Nukkit
 
 ## Commands
