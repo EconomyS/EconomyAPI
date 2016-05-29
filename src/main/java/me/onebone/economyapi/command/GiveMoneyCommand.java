@@ -53,17 +53,21 @@ public class GiveMoneyCommand extends Command{
 		}
 		try{
 			double amount = Double.parseDouble(args[1]);
+			if(amount < 0){
+				sender.sendMessage(this.plugin.getMessage("givemoney-invalid-number", sender));
+				return true;
+			}
 			
 			int result = this.plugin.addMoney(player, amount);
 			switch(result){
 			case EconomyAPI.RET_INVALID:
-				sender.sendMessage(this.plugin.getMessage("givemoney-invalid-number", sender));
+				sender.sendMessage(this.plugin.getMessage("reached-max", new String[]{Double.toString(amount)}, sender));
 				return true;
 			case EconomyAPI.RET_NO_ACCOUNT:
 				sender.sendMessage(this.plugin.getMessage("player-never-connected", new String[]{player}, sender));
 				return true;
 			case EconomyAPI.RET_SUCCESS:
-				sender.sendMessage(this.plugin.getMessage("givemoney-gave-money", new String[]{player, Double.toString(amount)}, sender));
+				sender.sendMessage(this.plugin.getMessage("givemoney-gave-money", new String[]{Double.toString(amount), player}, sender));
 				if(p instanceof Player){
 					p.sendMessage(this.plugin.getMessage("givemoney-money-given", new String[]{Double.toString(amount)}, sender));
 				}

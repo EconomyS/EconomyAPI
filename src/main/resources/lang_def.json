@@ -35,5 +35,6 @@
     "setmoney-failed": "Failed to set money due to unknown error",
     "setmoney-invalid-number": "%MONETARY_UNIT%%1 must be a numeric value",
     "mymoney-mymoney": "Your money : %MONETARY_UNIT%%1",
-    "mystatus-show": "My money status : %1%"
+    "mystatus-show": "My money status : %1%",
+    "reached-max": "%MONETARY_UNIT%%1 is out of max amount of money."
 }

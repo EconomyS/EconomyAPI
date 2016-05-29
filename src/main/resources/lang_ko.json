@@ -35,5 +35,6 @@
     "setmoney-failed": "돈을 설정할 수 없습니다.",
     "setmoney-invalid-number": "%1은(는) 잘못된 숫자입니다.",
     "mymoney-mymoney": "내 돈: %MONETARY_UNIT%%1",
-    "mystatus-show": "내 돈 상황: %1%"
+    "mystatus-show": "내 돈 상황: %1%",
+    "reached-max": "%MONETARY_UNIT%%1 은 최대 소유 가능한 돈을 넘습니다."
 }

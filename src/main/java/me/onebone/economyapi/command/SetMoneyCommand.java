@@ -66,6 +66,9 @@ public class SetMoneyCommand extends Command{
 			case EconomyAPI.RET_CANCELLED:
 				sender.sendMessage(this.plugin.getMessage("setmoney-failed", new String[]{player}, sender));
 				return true;
+			case EconomyAPI.RET_INVALID:
+				sender.sendMessage(this.plugin.getMessage("reached-max", new String[]{Double.toString(amount)}, sender));
+				return true;
 			case EconomyAPI.RET_SUCCESS:
 				sender.sendMessage(this.plugin.getMessage("setmoney-setmoney", new String[]{player, Double.toString(amount)}, sender));
 				if(p instanceof Player){

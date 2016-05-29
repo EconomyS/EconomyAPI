@@ -35,5 +35,6 @@
     "setmoney-failed": "不明なエラーにより所持金の設定に失敗しました。",
     "setmoney-invalid-number": "%MONETARY_UNIT%%1は無効な数値です。",
     "mymoney-mymoney": "現在の所持金 : %MONETARY_UNIT%%1",
-    "mystatus-show": "あなたの所持金は全体の%1%を占めています。"
+    "mystatus-show": "あなたの所持金は全体の%1%を占めています。",
+    "reached-max": "%MONETARY_UNIT%%1 は最大持てる金を超えます。"
 }
