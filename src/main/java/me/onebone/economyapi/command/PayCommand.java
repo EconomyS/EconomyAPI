@@ -59,7 +59,7 @@ public class PayCommand extends Command{
 		try{
 			double amount = Double.parseDouble(args[1]);
 			
-			int result = this.plugin.reduceMoney(player, amount);
+			int result = this.plugin.reduceMoney((Player) sender, amount);
 			switch(result){
 			case EconomyAPI.RET_INVALID:
 			case EconomyAPI.RET_CANCELLED:
