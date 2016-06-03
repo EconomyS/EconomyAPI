@@ -223,7 +223,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			for(int i = 0; i < params.length; i++){
 				message = message.replace("%" + (i + 1), params[i]);
 			}
-			return message.replace("%MONETARY_UNIT%", this.getMonetaryUnit()); 
+			return TextFormat.colorize(message.replace("%MONETARY_UNIT%", this.getMonetaryUnit()));
 		}
 		return "There are no message with key \"" + key + "\"";
 	}
