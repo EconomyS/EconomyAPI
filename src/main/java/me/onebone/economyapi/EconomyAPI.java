@@ -29,6 +29,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Utils;
+import cn.nukkit.utils.TextFormat;
 import cn.nukkit.command.CommandSender;
 import me.onebone.economyapi.command.*;
 import me.onebone.economyapi.event.account.CreateAccountEvent;
@@ -223,7 +224,7 @@ public class EconomyAPI extends PluginBase implements Listener{
 			for(int i = 0; i < params.length; i++){
 				message = message.replace("%" + (i + 1), params[i]);
 			}
-			return message.replace("%MONETARY_UNIT%", this.getMonetaryUnit()); 
+			return TextFormat.colorize(message.replace("%MONETARY_UNIT%", this.getMonetaryUnit()));
 		}
 		return "There are no message with key \"" + key + "\"";
 	}
