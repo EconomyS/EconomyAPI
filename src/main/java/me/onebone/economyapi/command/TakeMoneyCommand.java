@@ -61,7 +61,7 @@ public class TakeMoneyCommand extends Command{
 			int result = this.plugin.reduceMoney(player, amount);
 			switch(result){
 			case EconomyAPI.RET_INVALID:
-				sender.sendMessage(this.plugin.getMessage("takemoney-player-lack-of-money", sender));
+				sender.sendMessage(this.plugin.getMessage("takemoney-player-lack-of-money", new String[]{player, Double.toString(amount), Double.toString(this.plugin.myMoney(player))}, sender));
 				return true;
 			case EconomyAPI.RET_NO_ACCOUNT:
 				sender.sendMessage(this.plugin.getMessage("player-never-connected", new String[]{player}, sender));
