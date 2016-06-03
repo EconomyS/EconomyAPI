@@ -29,6 +29,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Utils;
+import cn.nukkit.utils.TextFormat;
 import cn.nukkit.command.CommandSender;
 import me.onebone.economyapi.command.*;
 import me.onebone.economyapi.event.account.CreateAccountEvent;
