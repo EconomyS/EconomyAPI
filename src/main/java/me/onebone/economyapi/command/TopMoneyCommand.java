@@ -67,11 +67,17 @@ public class TopMoneyCommand extends Command{
 					
 					StringBuilder output = new StringBuilder();
 					output.append(plugin.getMessage("topmoney-tag", new String[]{Integer.toString(page), Integer.toString(((players.size() + 6) / 5))}, sender) + "\n");
-
+					
+					int duplicate = 0;
+					double prev = -1D;
 					for(int n = 0; n < list.size(); n++){
+						double m = money.get(list.get(n));
+						if(m == prev) duplicate++;
+						else duplicate = 0;
+						prev = m;
 						int current = (int)Math.ceil((double)(n + 1) / 5);
 						if(page == current){
-							output.append(plugin.getMessage("topmoney-format", new String[]{Integer.toString(n + 1), list.get(n), Double.toString(money.get(list.get(n)))}, sender) + "\n");
+							output.append(plugin.getMessage("topmoney-format", new String[]{Integer.toString(n + 1 - duplicate), list.get(n), Double.toString(m)}, sender) + "\n");
 						}else if(page < current){
 							break;
 						}
