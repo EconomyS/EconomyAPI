@@ -18,6 +18,7 @@
   <url>https://github.com/onebone/EconomyAPI/</url>
 
   <properties>
+  	<project.build.number>SNAPSHOT</project.build.number>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -30,29 +31,52 @@
     </dependency>
   </dependencies>
   
-  <build>
-	<finalName>EconomyAPI-${project.version}</finalName>
-	<defaultGoal>clean install</defaultGoal>
-	<plugins>
-       <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-jar-plugin</artifactId>
-           <version>2.3.1</version>
-           <configuration>
-               <archive>
-                   <addMavenDescriptor>false</addMavenDescriptor>
-               </archive>
-           </configuration>
-       </plugin>
-       <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-compiler-plugin</artifactId>
-           <version>2.3.2</version>
-           <configuration>
-               <source>1.8</source>
-               <target>1.8</target>
-           </configuration>
-       </plugin>
-    </plugins>
-  </build>
+	<build>
+		<finalName>EconomyAPI-${project.version}-${project.build.number}</finalName>
+		<defaultGoal>clean install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<baseDir>${project.build.directory}</baseDir>
+					<file>target/classes/plugin.yml</file>
+					<replacements>
+						<replacement>
+							<token>@VERSION@</token>
+							<value>${project.version}</value>
+						</replacement> 
+					</replacements>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
