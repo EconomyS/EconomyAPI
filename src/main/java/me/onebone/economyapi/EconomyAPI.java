@@ -28,6 +28,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.TextFormat;
 import cn.nukkit.utils.Utils;
 import cn.nukkit.utils.TextFormat;
 import cn.nukkit.command.CommandSender;
@@ -217,7 +218,8 @@ public class EconomyAPI extends PluginBase implements Listener{
 	public String getMessage(String key, String[] params, String player){ // TODO: Individual language
 		player = player.toLowerCase();
 		
-		JSONObject obj = this.language.get("def");
+		String lang = this.getConfig().getString("lang.default-lang");
+		JSONObject obj = this.language.get(lang);
 		if(obj.has(key)){
 			String message = obj.getString(key);
 			
